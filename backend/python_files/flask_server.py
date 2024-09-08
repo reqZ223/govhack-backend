@@ -10,9 +10,9 @@ def rewrite_data():
     data = request.get_json()
     question = data.get('question')
     type = data.get('type')
-    print(question)
-    answer = provide_output(question, type)
-    print(answer)
+    department = "home_affairs" # Hardcoded for now
+    #department = data.get('department')
+    answer = provide_output(question, type, department)
     return jsonify({"answer": answer}), 200
 
 

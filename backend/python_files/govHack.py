@@ -23,17 +23,90 @@ def set_env_variables():
     os.environ["LANGCHAIN_PROJECT"] = "govhack-rag-model"
 
 
-# Function to load documents from a list of URLs
-def load_documents():
-    urls = [
-        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/titles-honours-forms-address/academics-and-professionals",
-        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/titles-honours-forms-address/australian-defence-force",
-        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/titles-honours-forms-address/awards-and-honours",
-        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/titles-honours-forms-address/diplomats",
-        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/titles-honours-forms-address/judiciary",
-        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/titles-honours-forms-address/parliaments-and-councils",
-        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/titles-honours-forms-address/royalty-vice-royalty-and-nobility",
+def get_urls(department):
+    if department == "home_affairs":
+        grammar_urls = [
+        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/types-words",
+        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/parts-sentences",
+        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/spelling",
+        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/titles-honours-forms-address",
+        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/types-words/adjectives",
+        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/types-words/adverbs",
+        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/types-words/conjunctions",
+        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/types-words/nouns",
+        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/types-words/prepositions",
+        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/types-words/pronouns",
+        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/types-words/verbs",
+        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/parts-sentences/clauses",
+        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/parts-sentences/phrases",
+        "https://www.stylemanual.gov.au/grammar-punctuation-and-conventions/punctuation",
+        ]
+        structuring_content_urls = [
+            "https://www.stylemanual.gov.au/structuring-content/paragraphs",
+            "https://www.stylemanual.gov.au/structuring-content/types-structure",
+            "https://www.stylemanual.gov.au/structuring-content/headings",
+            "https://www.stylemanual.gov.au/structuring-content/links",
+            "https://www.stylemanual.gov.au/structuring-content/lists",
+            "https://www.stylemanual.gov.au/structuring-content/tables",
+            "https://www.stylemanual.gov.au/structuring-content/text-boxes-and-callouts",
+            "https://www.stylemanual.gov.au/structuring-content/types-structure/sequential-structure",
+            "https://www.stylemanual.gov.au/structuring-content/types-structure/inverted-pyramid-structure",
+            "https://www.stylemanual.gov.au/structuring-content/types-structure/hierarchical-structure",
+            "https://www.stylemanual.gov.au/structuring-content/types-structure/narrative-structure",
+        ]
+        writing_and_designing_content_urls = [
+            "https://www.stylemanual.gov.au/writing-and-designing-content/clear-language-and-writing-style/plain-language-and-word-choice",
+            "https://www.stylemanual.gov.au/writing-and-designing-content/clear-language-and-writing-style/sentences",
+            "https://www.stylemanual.gov.au/writing-and-designing-content/findable-content",
+            "https://www.stylemanual.gov.au/writing-and-designing-content/security-classifications-and-protective-markings",
+            "https://www.stylemanual.gov.au/writing-and-designing-content/clear-language-and-writing-style/voice-and-tone",
+        ]
+        content_types_urls = [
+            "https://www.stylemanual.gov.au/content-types/easy-read",
+            "https://www.stylemanual.gov.au/content-types/emails-and-letters",
+            "https://www.stylemanual.gov.au/content-types/blogs",
+            "https://www.stylemanual.gov.au/content-types/reports",
+        ]
+        referencing_and_attribution_urls = [
+        "https://www.stylemanual.gov.au/referencing-and-attribution/author-date",
+        "https://www.stylemanual.gov.au/referencing-and-attribution/documentary-note",
+        "https://www.stylemanual.gov.au/referencing-and-attribution/legal-material",
+        "https://www.stylemanual.gov.au/referencing-and-attribution/shortened-forms-used-referencing",
+        "https://www.stylemanual.gov.au/referencing-and-attribution/author-date/broadcast-media-and-podcasts-film-video-television-and-radio-programs",
+        "https://www.stylemanual.gov.au/referencing-and-attribution/author-date/classics",
+        "https://www.stylemanual.gov.au/referencing-and-attribution/author-date/musical-compositions",
+        "https://www.stylemanual.gov.au/referencing-and-attribution/author-date/plays-and-poetry",
+        "https://www.stylemanual.gov.au/referencing-and-attribution/author-date/works-art",
+        "https://www.stylemanual.gov.au/referencing-and-attribution/legal-material/bills-and-explanatory-material",
+        "https://www.stylemanual.gov.au/referencing-and-attribution/legal-material/acts-parliament",
+        "https://www.stylemanual.gov.au/referencing-and-attribution/legal-material/schedules",
+        "https://www.stylemanual.gov.au/referencing-and-attribution/legal-material/delegated-legislation",
+        "https://www.stylemanual.gov.au/referencing-and-attribution/legal-material/cases-and-legal-authorities",
+        "https://www.stylemanual.gov.au/referencing-and-attribution/legal-material/treaties",
+        "https://www.stylemanual.gov.au/referencing-and-attribution/legal-material/authoritative-reports",
     ]
+        accessible_and_inclusive_content_urls = [
+        "https://www.stylemanual.gov.au/accessible-and-inclusive-content/how-people-read",
+        "https://www.stylemanual.gov.au/accessible-and-inclusive-content/inclusive-language/aboriginal-and-torres-strait-islander-peoples",
+        "https://www.stylemanual.gov.au/accessible-and-inclusive-content/inclusive-language/age-diversity",
+        "https://www.stylemanual.gov.au/accessible-and-inclusive-content/inclusive-language/cultural-and-linguistic-diversity",
+        "https://www.stylemanual.gov.au/accessible-and-inclusive-content/inclusive-language/gender-and-sexual-diversity",
+        "https://www.stylemanual.gov.au/accessible-and-inclusive-content/inclusive-language/people-disability",
+        ]
+        urls = ["https://www.stylemanual.gov.au/writing-and-designing-content/clear-language-and-writing-style/plain-language-and-word-choice"]
+    elif department == "ATO":
+        urls = [] # To add 
+    elif department == "Treasury":
+        urls = [] # to add
+    else: 
+        urls = [] # to add
+    return urls
+
+
+# Function to load documents from a list of URLs
+def load_documents(department):
+    department = department 
+    urls = get_urls(department)
     docs = [WebBaseLoader(url).load() for url in urls]
     docs_list = [item for sublist in docs for item in sublist]
     return docs_list
@@ -41,8 +114,9 @@ def load_documents():
 
 # Function to split documents into chunks
 def split_documents(docs_list):
+
     text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-        chunk_size=250, chunk_overlap=0
+        chunk_size=150, chunk_overlap=20
     )
     return text_splitter.split_documents(docs_list)
 
@@ -63,18 +137,41 @@ def get_prompts(type):
     if type == "rewrite":
         prompt = PromptTemplate(
             template="""
-        Your function is to rewrite or paraphrase the text based on the type of text based on the Australian Government Style Manual. 
-        """, input_variables=["question", "documents"],
+        Your function is to rewrite or paraphrase the text to plain australian english following the guidlines in the Australian Government Style Manual. 
+        You will also provide the relevant citations when you rewrite the text at the end of your response. 
+
+        Question: {question} 
+        Documents: {documents}  
+
+        """,
+            input_variables=["question", "documents"],
         )
     elif type == "feedback":
         prompt = PromptTemplate(
-            """   
+            template="""   
             Your function is to provide feedback on the inputs. 
 
-            You will also give a scoring criteria (grammar, punctuation, titles, and honours) on a scale of 1 to 10 based on the Australian Government Style Manual. 
-            """, input_variables=["question", "documents"],
-        )
+            You will also give a scoring criteria (grammar, punctuation, inclusive language, and plain language) on a scale of 1 to 10 based on the Australian Government Style Manual. 
+            
+            You will also provide the relevant citations for the feedback you provide at the end of your response.
 
+            Question: {question} 
+            Documents: {documents}  
+
+            """,
+            input_variables=["question", "documents"],
+        )
+    elif type == "ask": ## This is a sample prompt for now
+        prompt = PromptTemplate(
+            template="""
+            You are an assistant for question-answering tasks on anything related to the Australian Government Style Manual.  
+            You should also cite sources when you answer the question. 
+            
+            Question: {question} 
+            Documents: {documents}    
+
+            """, input_variables=["question", "documents"]
+        )
     return prompt
 
 
@@ -113,7 +210,7 @@ def calculateDuration(start, end):
 
 
 # Main function to initialize and run the processes
-def provide_output(question, type):
+def provide_output(question, type, department):
     # Set environment variables
     start = datetime.now()
     set_env_variables()
@@ -122,7 +219,7 @@ def provide_output(question, type):
     print(f"Setting environment variables took {duration_env} seconds")
 
     start = datetime.now()
-    docs_list = load_documents()
+    docs_list = load_documents(department)
     end = datetime.now()
     duration_load = calculateDuration(start, end)
     print(f"Loading documents took {duration_load} seconds")
@@ -145,7 +242,6 @@ def provide_output(question, type):
     end = datetime.now()
     duration_rag = calculateDuration(start, end)
     print(f"Setting up the RAG chain took {duration_rag} seconds")
-
 
     question_to_answer = question
     # Get the answer
